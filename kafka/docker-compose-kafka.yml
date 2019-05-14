@@ -4,7 +4,7 @@
 version: '3'
 services:
   zk1:
-    image: confluentinc/cp-zookeeper:5.1.3
+    image: confluentinc/cp-zookeeper:latest
     container_name: zk1
     ports: 
       - "22181:22181"
@@ -21,7 +21,7 @@ services:
       # - ./kafka/zk1/secrets:/var/lib/zookeeper/secrets
 
   zk2:
-    image: confluentinc/cp-zookeeper:5.1.3
+    image: confluentinc/cp-zookeeper:latest
     container_name: zk2
     ports:
       - "32181:32181"
@@ -38,7 +38,7 @@ services:
       # - ./kafka/zk2/secrets:/var/lib/zookeeper/secrets
 
   zk3:
-    image: confluentinc/cp-zookeeper:5.1.3
+    image: confluentinc/cp-zookeeper:latest
     container_name: zk3
     ports: 
       - "42181:42181"
@@ -55,7 +55,7 @@ services:
       # - ./kafka/zk3/secrets:/var/lib/zookeeper/secrets
 
   kafka1:
-    image: confluentinc/cp-kafka:5.1.3
+    image: confluentinc/cp-kafka:latest
     container_name: kafka1
     ports:
       - "19092:19092"
@@ -72,7 +72,7 @@ services:
       # - ./kafka/kafka3/secrets:/var/lib/kafka/secrets
 
   kafka2:
-    image: confluentinc/cp-kafka:5.1.3
+    image: confluentinc/cp-kafka:latest
     container_name: kafka2
     ports:
       - "29092:29092"
@@ -89,7 +89,7 @@ services:
       # - ./kafka/kafka3/secrets:/var/lib/kafka/secrets
 
   kafka3:
-    image: confluentinc/cp-kafka:5.1.3
+    image: confluentinc/cp-kafka:latest
     container_name: kafka3
     ports: 
       - "39092:39092"

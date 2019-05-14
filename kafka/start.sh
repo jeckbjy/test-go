@@ -1,0 +1,1 @@
+MY_IP=192.168.18.34 docker-compose -f docker-compose-kafka.yml up

@@ -17,4 +17,6 @@
 spider/spider
 spider/coookies.json
 kafka/kafka/
+kafka/zapi
+kafka/zworker
 zipkin/zipkin.jar
