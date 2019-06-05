@@ -20,3 +20,5 @@ kafka/kafka/
 kafka/zapi
 kafka/zworker
 zipkin/zipkin.jar
+compiler/compiler
+compiler/simple
