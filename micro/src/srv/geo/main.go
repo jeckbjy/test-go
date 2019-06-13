@@ -1,0 +1,90 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/hailocab/go-geoindex"
+	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/metadata"
+	"golang.org/x/net/trace"
+	"io/ioutil"
+	"log"
+	geo "srv/geo/proto"
+)
+
+const ServiceName = "go.micro.srv.geo"
+
+func main() {
+	service := micro.NewService(micro.Name(ServiceName))
+	service.Init()
+	geo.RegisterGeoHandler(service.Server(), newGeoService())
+	service.Run()
+}
+
+const (
+	maxSearchRadius  = 10
+	maxSearchResults = 5
+)
+
+type point struct {
+	Pid  string  `json:"hotelId"`
+	Plat float64 `json:"lat"`
+	Plon float64 `json:"lon"`
+}
+
+// Implement Point interface
+func (p *point) Lat() float64 { return p.Plat }
+func (p *point) Lon() float64 { return p.Plon }
+func (p *point) Id() string   { return p.Pid }
+
+type GeoService struct {
+	index *geoindex.ClusteringIndex
+}
+
+func (s *GeoService) Nearby(ctx context.Context, req *geo.Request, rsp *geo.Result) error {
+	md, _ := metadata.FromContext(ctx)
+	traceID := md["traceID"]
+
+	if tr, ok := trace.FromContext(ctx); ok {
+		tr.LazyPrintf("traceID %s", traceID)
+	}
+
+	// create center point for query
+	center := &geoindex.GeoPoint{
+		Pid:  "",
+		Plat: float64(req.Lat),
+		Plon: float64(req.Lon),
+	}
+
+	// find points around center point
+	points := s.index.KNearest(center, maxSearchResults, geoindex.Km(maxSearchRadius), func(p geoindex.Point) bool {
+		return true
+	})
+
+	for _, p := range points {
+		rsp.HotelIds = append(rsp.HotelIds, p.Id())
+	}
+	return nil
+}
+
+func newGeoService() *GeoService {
+	file, err := ioutil.ReadFile("data/locations.json")
+	if err != nil {
+		log.Fatalf("load data fail:%+v\n", err)
+		return nil
+	}
+
+	// unmarshal json points
+	var points []*point
+	if err := json.Unmarshal(file, &points); err != nil {
+		log.Fatalf("Failed to load hotels: %v", err)
+	}
+
+	// add points to index
+	index := geoindex.NewClusteringIndex()
+	for _, point := range points {
+		index.Add(point)
+	}
+
+	return &GeoService{index:index}
+}

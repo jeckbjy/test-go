@@ -1,0 +1,67 @@
+version: "3"
+services:
+  consul:
+    command: -server -bootstrap -rejoin
+    image: progrium/consul:latest
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+  micro:
+    command: --registry=consul --registry_address=consul:8500 api --handler=rpc
+    image: microhq/micro:latest
+    links:
+      - consul
+      - api
+    ports:
+      - "8080:8080"
+  api:
+    build:
+      context: .
+      args:
+        APP: hotel
+    entrypoint: /app/hotel
+    command: --registry=consul --registry_address=consul:8500
+    links:
+      - consul
+      - auth
+      - geo
+      - profile
+      - rate
+  auth:
+    build:
+      context: .
+      args:
+        APP: auth
+    entrypoint: /app/auth
+    command: --registry=consul --registry_address=consul:8500
+    links:
+      - consul
+  geo:
+    build:
+      context: .
+      args:
+        APP: geo
+    entrypoint: /app/geo
+    command: --registry=consul --registry_address=consul:8500
+    links:
+      - consul
+  profile:
+    build:
+      context: .
+      args:
+        APP: profile
+    entrypoint: /app/profile
+    command: --registry=consul --registry_address=consul:8500
+    links:
+      - consul
+  rate:
+    build:
+      context: .
+      args:
+        APP: rate
+    entrypoint: /app/rate
+    command: --registry=consul --registry_address=consul:8500
+    links:
+      - consul
