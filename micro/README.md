@@ -10,7 +10,7 @@ src/srv目录下:backend，用于给frontend提供功能服务
 $ make build
 $ make run
 ```
-- 测试
+## 测试
 
 非法的token
 ```bash
@@ -129,7 +129,7 @@ curl -H 'Content-Type: application/json' \
 }
 ```
 
-- 依赖库
+## 依赖库
 ```bash
 $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
 $ go get -u github.com/micro/protoc-gen-micro
@@ -145,3 +145,11 @@ $ go get -u github.com/hailocab/go-geoindex
     查看服务: micro --registry=consul --registry_address=localhost:8500 list services  
     启动web: micro --registry=consul --registry_address=localhost:8500 web  
     web ui地址: http://localhost:8082  
+
+## 其他文章
+- [再见，micro](https://songrgg.github.io/microservice/goodbye-micro/)
+- [架构介绍](https://www.cnblogs.com/li-peng/p/9558421.html)
+
+## 一些想法
+- 感觉目前go-micro更适合于类似http的rest请求，并不支持服务器主动推送
+- go-micro的handler中并不保证线程安全，需要自己加锁
