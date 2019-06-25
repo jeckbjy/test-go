@@ -22,3 +22,4 @@ kafka/zworker
 zipkin/zipkin.jar
 compiler/compiler
 compiler/simple
+istio/istio-*/

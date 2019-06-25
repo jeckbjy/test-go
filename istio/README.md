@@ -11,7 +11,7 @@
   2. 使用helm templat生成配置，然后调用kubectl安装,好处是不需要helm tiller
   3. 使用helm install直接安装
 - 安装流程,虽然分为三种安装方式,但安装流程大体一致
-  1. 下载istio,curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.0 sh -  
+  1. 下载istio,执行./download.sh  
   2. 安装[Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions),简单介绍一下CRDs功能,k8s给我提供了一些常用的资源,比如Pod，Deployment，service等，而CRDs使k8s拥有了扩展资源的能力，第三方可以自己定义新的资源类型
   3. 安装istio,install/kubernetes/helm/istio目录下提供了helm的charts,可以通过配置不同values安装相应需要的功能,预提供的[Configuration Profiles](https://istio.io/docs/setup/kubernetes/additional-setup/config-profiles/),至此istio就已经安装完了
   4. 安装自己应用,比如安装[Bookinfo sample](https://istio.io/docs/examples/bookinfo/)
