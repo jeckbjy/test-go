@@ -24,3 +24,5 @@ compiler/compiler
 compiler/simple
 istio/istio-*/
 k8s/crd/zcrd
+pdf/*.pdf
+pdf/pdf
