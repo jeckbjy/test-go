@@ -27,3 +27,4 @@ k8s/crd/zcrd
 pdf/*.pdf
 pdf/pdf
 fulltext/riot/data
+beam/outputs/
