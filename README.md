@@ -10,3 +10,7 @@
 ## NLP
 
 - [medium nlp](https://medium.com/@sivssdn/golang-and-nlp-resources-4fec6fe49bb0)
+
+## 其他知识
+
+- [LockFree](https://www.cnblogs.com/gaochundong/p/lock_free_programming.html)
