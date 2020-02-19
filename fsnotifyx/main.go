@@ -14,7 +14,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	watcher.Add("registry.srv")
+	watcher.Add(".services")
 	for {
 		select {
 		case event := <-watcher.Events:
