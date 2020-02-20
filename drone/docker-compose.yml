@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  drone-server:
+    image: drone/drone:latest
+    ports:
+      - 443:443
+      # - "${PRO_PUBLIC_IP}:8000:8000"
+    volumes:
+      - drone-data:/var/lib/drone/:rw
+    restart: always
+    environment:
+      - DRONE_SECRET=drone
+      - DRONE_OPEN=false
+      - DRONE_ADMIN=jeckbjy
+      - DRONE_HOST=localhost
+      - DRONE_GITHUB=true
+      - DRONE_GITHUB_CLIENT=a3aa2ba55814619eb951
+      - DRONE_GITHUB_SECRET=a077ffaf0be53c62e85f68d743fa5a91982e9924
+      - DRONE_SERVER_CERT=/etc/certs/drone.domain.com.crt
+      - DRONE_SERVER_KEY=/etc/certs/drone.domain.com.key
+
+  drone-agent:
+    image: drone/agent:latest
+    restart: always
+    depends_on:
+      - drone-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    environment:
+      - DRONE_SECRET=drone
+      - DRONE_SERVER=drone-server:9000
+    dns: 114.114.114.114
+
+volumes:
+  drone-data:    
