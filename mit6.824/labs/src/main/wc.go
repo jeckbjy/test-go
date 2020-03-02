@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"mapreduce"
 	"os"
+	"strconv"
+	"unicode"
 )
 
 //
@@ -15,6 +17,35 @@ import (
 //
 func mapF(filename string, contents string) []mapreduce.KeyValue {
 	// TODO: you have to write this function
+	kvMap := make(map[string]int)
+	i := 0
+	for {
+		for ; i < len(contents); i++ {
+			if !unicode.IsSpace(rune(contents[i])) {
+				break
+			}
+		}
+
+		if i == len(contents) {
+			break
+		}
+		j := i + 1
+		for ; j < len(contents); j++ {
+			if unicode.IsSpace(rune(contents[j])) {
+				break
+			}
+		}
+		key := contents[i:j]
+		i = j
+		kvMap[key]++
+	}
+
+	result := make([]mapreduce.KeyValue, 0, len(kvMap))
+	for k, v := range kvMap {
+		result = append(result, mapreduce.KeyValue{Key: k, Value: strconv.Itoa(v)})
+	}
+
+	return result
 }
 
 //
@@ -23,7 +54,15 @@ func mapF(filename string, contents string) []mapreduce.KeyValue {
 // any map task.
 //
 func reduceF(key string, values []string) string {
+	// log.Printf("reduce,%+v\n", key)
 	// TODO: you also have to write this function
+	count := 0
+	for _, v := range values {
+		n, _ := strconv.Atoi(v)
+		count += n
+	}
+
+	return strconv.Itoa(count)
 }
 
 // Can be run in 3 ways:
