@@ -83,9 +83,8 @@ func doMap(
 		if err := ioutil.WriteFile(k, data, os.ModePerm); err != nil {
 			log.Printf("write intermediate file,%+v,%+v\n", k, err)
 			break
-		} else {
-			log.Printf("write intermediate file,%+v\n", k)
 		}
+		// log.Printf("write intermediate file,%+v\n", k)
 	}
 }
 

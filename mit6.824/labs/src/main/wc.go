@@ -5,8 +5,11 @@ import (
 	"mapreduce"
 	"os"
 	"strconv"
-	"unicode"
 )
+
+func isLetter(ch byte) bool {
+	return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
+}
 
 //
 // The map function is called once for each file of input. The first
@@ -21,7 +24,7 @@ func mapF(filename string, contents string) []mapreduce.KeyValue {
 	i := 0
 	for {
 		for ; i < len(contents); i++ {
-			if !unicode.IsSpace(rune(contents[i])) {
+			if isLetter(contents[i]) {
 				break
 			}
 		}
@@ -31,7 +34,7 @@ func mapF(filename string, contents string) []mapreduce.KeyValue {
 		}
 		j := i + 1
 		for ; j < len(contents); j++ {
-			if unicode.IsSpace(rune(contents[j])) {
+			if !isLetter(contents[j]) {
 				break
 			}
 		}

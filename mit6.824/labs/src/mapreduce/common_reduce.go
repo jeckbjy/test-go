@@ -51,6 +51,11 @@ func doReduce(
 	// file.Close()
 	//
 
+	// 这其实是shuffle的过程
+	// shuffle包括几个步骤:
+	// 1:数据迁移,从map节点将数据迁移到reduce节点
+	// 2:数据合并,将相同key的数据合并成一个数组
+	// 3:数据排序,按照key进行排序,这个貌似不是必须的
 	kvMap := make(map[string][]string)
 	for i := 0; i < nMap; i++ {
 		fileName := reduceName(jobName, i, reduceTaskNumber)
@@ -69,6 +74,7 @@ func doReduce(
 		}
 	}
 
+	// 执行reduce
 	file, err := os.OpenFile(outFile, os.O_WRONLY|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		log.Printf("open output file fail,%+v", err)
