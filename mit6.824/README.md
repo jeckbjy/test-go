@@ -15,6 +15,18 @@
   - 实现细节:
     - map和reduce的实现比较简单,主要是中间文件的生成与读取,格式的定义,shuffle的实现
     - schedule的实现稍微复杂一些，schedule用于rpc调度map和reduce,保证所有的任务都能完成后才能进行下一步,同时还需要监控异常节点,失败后自动转移到其他节点重新执行
+  - 延伸扩展
+    - [beam](https://beam.apache.org/)是结合了MapReduce, FlumeJava, and Millwheel.三种框架
+    - beam相比于原生的MapReduce,更加抽象
+      - 数据抽象为PCollection,相比较原生MR,数据结构更灵活,不再是KV结构,而是输入与输出相一致即可
+      - 操作抽象为PTransform,不管是Map函数,还是Reduce函数,或者是Shuffle函数,都是一样的
+        - ParDo(ParallelDO):通常相当于Map或者Reduce函数
+        - GroupByKey,CoGroupByKey:相当于Shuffle的过程,即从Map的输出kv，转换到Reduce需要的key:array的数据结构
+        - Combine:主要是聚合函数,比如max,min,sum
+        - Flatten:合并两个PCollection
+        - Partition:分隔一个PCollection到多个
+      - 相比较MR,beam支持了实时在线计算,也就是unbounded data,核心思想就是使用时间窗口统计数据
+      - 时间窗口带来的挑战:如何划分时间窗口,是使用到达时间还是数据产生时间?数据延迟到达需要如何补偿计算?
   - 注:
     - 源代码master_rpc.go:48行是有bug的,format格式不对,会导致test跑不起来
 

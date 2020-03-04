@@ -4,10 +4,8 @@
 
 - 问题描述:
   新游戏在开服后往往会有瞬时大量用户登录涌入的高峰流量，对服务器产生压力。
- 
 - 解决方案:
   开发开服排队系统，对到达服务器的大量用户进行队列缓冲，名为QueueService，根据服务器压力情况，逐步让队列中的用户拿到登录服务器的令牌（token），代表该用户请求可以被处理了，从而缓解登录高峰，排队中用户要能够“实时”知道自己在队伍中的位置变更。
- 
 - 开发要求:
    线下，无时间限制
 - 交付:
@@ -32,3 +30,7 @@
   - 安装graphviz brew install graphviz
   - go tool pprof --pdf ./server ./mem.pprof > mem.pdf 
   - go tool pprof --pdf ./server ./cpu.pprof > cpu.pdf
+
+## 其他
+
+- 面试并没有过,不要使用
