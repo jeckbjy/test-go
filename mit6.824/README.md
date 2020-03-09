@@ -29,8 +29,11 @@
       - 时间窗口带来的挑战:如何划分时间窗口,是使用到达时间还是数据产生时间?数据延迟到达需要如何补偿计算?
   - 注:
     - 源代码master_rpc.go:48行是有bug的,format格式不对,会导致test跑不起来
+- Raft
 
 ## 参考
+
+### MapReduce
 
 - [6.824: Distributed Systems](https://pdos.csail.mit.edu/6.824/)
 - [实现](https://github.com/yixuaz/6.824-2018)
@@ -39,3 +42,7 @@
 - [blog](https://thesquareplanet.com/blog/students-guide-to-raft/)
 - [bilibili视频](https://www.bilibili.com/video/av87684880/)
 - [MapReduce Tutorial](https://www.tutorialscampus.com/tutorials/map-reduce/index.htm)
+
+### Raft
+
+- [Implementing Raft](https://eli.thegreenplace.net/2020/implementing-raft-part-0-introduction/)
