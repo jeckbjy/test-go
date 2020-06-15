@@ -14,6 +14,7 @@ import (
 // demo2:https://blog.csdn.net/moxiaomomo/article/details/77096814
 // 其他:https://www.cnblogs.com/li-peng/p/9391543.html
 // 安装Graphviz: http://macappstore.org/graphviz-2/
+// https://github.com/micro/go-micro/blob/master/debug/profile/pprof/pprof.go
 func main() {
 	demo2()
 }
