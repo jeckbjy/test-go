@@ -28,3 +28,5 @@ pdf/*.pdf
 pdf/pdf
 fulltext/riot/data
 beam/outputs/
+dht/spider
+torsniff/torsniff
